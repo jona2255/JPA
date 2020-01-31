@@ -28,75 +28,87 @@ public class App
                 "5. Mostrar todo\n" +
                 "6. Salir");
 
-        switch (scanner.nextInt()){
-            case 1:
-                Alumno alumno = new Alumno();
+        int option = scanner.nextInt();
+        while(true){
+            switch (option){
 
-                mostrarAlumnos(em);
+                case 1:
+                    Alumno alumno = new Alumno();
 
-                System.out.println("Introduce el DNI del alumno");
-                alumno.setDni(scanner.nextInt());
-                scanner.nextLine();
-                System.out.println("Introduce el Nombre del alumno");
-                alumno.setNombre(scanner.nextLine());
-                System.out.println("Introduce el ID de la clase del alumno:");
-                alumno.setClaseId(scanner.nextInt());
-                scanner.nextLine();
+                    mostrarAlumnos(em);
 
-                em.getTransaction().begin();
-                em.persist(alumno);
-                em.getTransaction().commit();
-                em.close();
-                break;
-            case 2:
-                Clase clase = new Clase();
+                    System.out.println("Introduce el DNI del alumno");
+                    alumno.setDni(scanner.nextInt());
+                    scanner.nextLine();
+                    System.out.println("Introduce el Nombre del alumno");
+                    alumno.setNombre(scanner.nextLine());
+                    System.out.println("Introduce el ID de la clase del alumno:");
+                    alumno.setClaseId(scanner.nextInt());
+                    scanner.nextLine();
 
-                mostrarClases(em);
-                System.out.println("Introduce el ID de la clase");
-                clase.setId(scanner.nextInt());
-                System.out.println("Introduce el Instituto");
-                clase.setInstitutoId(scanner.nextInt());
-                System.out.println("Introduce el numero de alumnos");
-                clase.setnAlumnos(scanner.nextInt());
-                scanner.nextLine();
-                System.out.println("Introduce el nombre de la clase");
-                clase.setNombre(scanner.nextLine());
-                System.out.println("Introduce la rama");
-                clase.setRama(scanner.nextLine());
+                    em.getTransaction().begin();
+                    em.persist(alumno);
+                    em.getTransaction().commit();
+                    em.close();
+                    break;
+                case 2:
+                    Clase clase = new Clase();
 
-
-                em.getTransaction().begin();
-                em.persist(clase);
-                em.getTransaction().commit();
-                em.close();
-                break;
-            case 3:
-                Instituto instituto = new Instituto();
-
-                mostrarInstitutos(em);
-
-                instituto.setId(2);
-                instituto.setNAlumnos(1);
-                instituto.setNombre("Institut Puig Castellar");
+                    mostrarClases(em);
+                    System.out.println("Introduce el ID de la clase");
+                    clase.setId(scanner.nextInt());
+                    System.out.println("Introduce el Instituto");
+                    clase.setInstitutoId(scanner.nextInt());
+                    System.out.println("Introduce el numero de alumnos");
+                    clase.setnAlumnos(scanner.nextInt());
+                    scanner.nextLine();
+                    System.out.println("Introduce el nombre de la clase");
+                    clase.setNombre(scanner.nextLine());
+                    System.out.println("Introduce la rama");
+                    clase.setRama(scanner.nextLine());
 
 
-                em.getTransaction().begin();
-                em.persist(instituto);
-                em.getTransaction().commit();
-                em.close();
-            case 4:
-                break;
-            case 5:
-                mostrarAlumnos(em);
-                mostrarClases(em);
-                mostrarInstitutos(em);
-                break;
-            case 6:
-                System.out.println("Adiós");
-                break;
-            default:
-                System.out.println("No existe esa opción");
-                break;
+                    em.getTransaction().begin();
+                    em.persist(clase);
+                    em.getTransaction().commit();
+                    em.close();
+                    break;
+                case 3:
+                    Instituto instituto = new Instituto();
+
+                    mostrarInstitutos(em);
+
+                    instituto.setId(2);
+                    instituto.setNAlumnos(1);
+                    instituto.setNombre("Institut Puig Castellar");
+
+
+                    em.getTransaction().begin();
+                    em.persist(instituto);
+                    em.getTransaction().commit();
+                    em.close();
+                case 4:
+                    break;
+                case 5:
+                    mostrarAlumnos(em);
+                    mostrarClases(em);
+                    mostrarInstitutos(em);
+                    break;
+                case 6:
+                    System.out.println("Adiós");
+                    return;
+                default:
+                    System.out.println("No existe esa opción");
+                    return;
+            }
+
+            System.out.println("\n1. Añadir Alumno\n" +
+                    "2. Añadir Clase\n" +
+                    "3. Añadir Instituto\n" +
+                    "4. Comprobar número alumnos\n" +
+                    "5. Mostrar todo\n" +
+                    "6. Salir");
+            option = scanner.nextInt();
         }
 
     }
