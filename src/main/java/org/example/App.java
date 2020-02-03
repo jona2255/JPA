@@ -4,8 +4,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Hello world!
@@ -13,7 +15,8 @@ import java.util.Scanner;
  */
 public class App 
 {
-    public static void main( String[] args ){
+
+    public static void main(String[] args ){
 
         EntityManagerFactory emf= Persistence.createEntityManagerFactory("damPersistence");
         EntityManager em = emf.createEntityManager();
@@ -49,12 +52,12 @@ public class App
                     em.getTransaction().begin();
                     em.persist(alumno);
                     em.getTransaction().commit();
-                    em.close();
                     break;
                 case 2:
                     Clase clase = new Clase();
 
                     mostrarClases(em);
+
                     System.out.println("Introduce el ID de la clase");
                     clase.setId(scanner.nextInt());
                     System.out.println("Introduce el Instituto");
@@ -67,27 +70,31 @@ public class App
                     System.out.println("Introduce la rama");
                     clase.setRama(scanner.nextLine());
 
-
                     em.getTransaction().begin();
                     em.persist(clase);
                     em.getTransaction().commit();
-                    em.close();
                     break;
                 case 3:
                     Instituto instituto = new Instituto();
 
                     mostrarInstitutos(em);
 
-                    instituto.setId(2);
-                    instituto.setNAlumnos(1);
-                    instituto.setNombre("Institut Puig Castellar");
-
+                    System.out.println("Introduce el ID del Instituto");
+                    instituto.setId(scanner.nextInt());
+                    scanner.nextLine();
+                    System.out.println("Introduce el nombre del Instituto");
+                    instituto.setNombre(scanner.nextLine());
+                    System.out.println("Introduce el número de alumnos del Instituto");
+                    instituto.setNAlumnos(scanner.nextInt());
+                    scanner.nextLine();
 
                     em.getTransaction().begin();
                     em.persist(instituto);
                     em.getTransaction().commit();
-                    em.close();
                 case 4:
+
+                    contarAlumnos(em);
+
                     break;
                 case 5:
                     mostrarAlumnos(em);
@@ -112,6 +119,48 @@ public class App
         }
 
     }
+
+    private static void contarAlumnos(EntityManager em) {
+
+        TypedQuery<Alumno> totalAlumnos = em.createQuery("SELECT i FROM Alumno i", Alumno.class);
+        List<Alumno> alumnosTotalList = totalAlumnos.getResultList();
+
+        TypedQuery<Clase> totalClases = em.createQuery("SELECT i FROM Clase i", Clase.class);
+        List<Clase> clasesList = totalClases.getResultList();
+
+        TypedQuery<Instituto> totalInstitutos = em.createQuery("SELECT i FROM Instituto i", Instituto.class);
+        List<Instituto> institutosList = totalInstitutos.getResultList();
+
+        for (Instituto i : institutosList) {
+
+            System.out.println("Instituto ID: " + i.getId());
+            int cont = 0;
+
+            for (Clase c : clasesList) {
+
+                if (c.getInstitutoId() == i.getId()) {
+
+                    System.out.println("Clase ID: " + c.getId());
+
+                    for (Alumno a : alumnosTotalList) {
+                        if (a.getClaseId() == c.getId()) {
+                            System.out.println(a);
+                            cont++;
+                        }
+                    }
+                }
+
+            }
+            System.out.println("\n--------------------------");
+            System.out.println("Total Alumnos: " + cont);
+            System.out.println("\n--------------------------");
+        }
+
+        System.out.println("Número de alumnos: " + alumnosTotalList.size() + "\n");
+
+
+    }
+
 
     public static void mostrarAlumnos(EntityManager em){
         System.out.println("Alumnos:");

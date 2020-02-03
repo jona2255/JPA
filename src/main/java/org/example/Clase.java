@@ -48,6 +48,30 @@ public class Clase implements Serializable {
         this.nAlumnos = nAlumnos;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getRama() {
+        return rama;
+    }
+
+    public Integer getnAlumnos() {
+        return nAlumnos;
+    }
+
+    public Integer getInstitutoId() {
+        return institutoId;
+    }
+
     @Override
     public String toString() {
         return "Clase{" +

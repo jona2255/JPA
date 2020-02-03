@@ -36,6 +36,22 @@ public class Instituto implements Serializable {
         this.nombre = s;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Integer getnAlumnos() {
+        return nAlumnos;
+    }
+
     @Override
     public String toString() {
         return "Instituto{" +

@@ -34,6 +34,22 @@ public class Alumno implements Serializable {
         this.claseId = claseId;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getDni() {
+        return dni;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Integer getClaseId() {
+        return claseId;
+    }
+
     @Override
     public String toString() {
         return "Alumno{" +
